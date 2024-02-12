@@ -1,5 +1,8 @@
 window.onload = async function() {
 
+    await navigator.mediaDevices.getUserMedia({video: true});
+
+
     const srdButton = document.getElementById('srdButton'); // NO I18N
     const remoteSDPTextArea = document.getElementById('remoteSDPTextArea'); // NO I18N
 

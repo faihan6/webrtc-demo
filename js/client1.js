@@ -1,4 +1,8 @@
+
+
 window.onload = async function() {
+
+    await navigator.mediaDevices.getUserMedia({video: true});
 
     const generateOfferButton = document.getElementById('generateOfferButton'); // NO I18N
     const localSDPTextArea = document.getElementById('localSDPTextArea'); // NO I18N
