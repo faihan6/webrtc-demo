@@ -2,6 +2,8 @@
 
 window.onload = async function() {
 
+    const shouldRemoveHostCandidates = (new URLSearchParams(location.search)).get('hostcandidates') === 'false'; // NO I18N
+
     await navigator.mediaDevices.getUserMedia({video: true});
 
     const generateOfferButton = document.getElementById('generateOfferButton'); // NO I18N
@@ -46,11 +48,21 @@ window.onload = async function() {
         pc.setLocalDescription(offer);
 
         pc.onicegatheringstatechange = function() {
+            document.getElementById('state').innerText = getStateString(pc);
             if (pc.iceGatheringState === 'complete') { // NO I18N
-                localSDPTextArea.value = JSON.stringify(pc.localDescription);
+
+                let sdp = pc.localDescription
+                if(shouldRemoveHostCandidates){
+                    sdp.sdp = sdp.sdp.split('\r\n').filter(l => !l.includes('host')).join('\r\n');
+                }
+                localSDPTextArea.value = JSON.stringify(sdp);
             }
         }
     }
+
+    pc.oniceconnectionstatechange = refreshState
+    pc.onsignalingstatechange = refreshState
+    pc.onconnectionstatechange = refreshState
 
     srdButton.onclick = async function() {
         let remoteSDP = JSON.parse(remoteSDPTextArea.value);
@@ -62,4 +74,21 @@ window.onload = async function() {
     }
 
 
+}
+
+function getStateString(peer){
+
+    let str = '';
+
+    str += 'connectionState: ' + peer.connectionState + '\n';
+    str += 'iceConnectionState: ' + peer.iceConnectionState + '\n';
+    str += 'iceGatheringState: ' + peer.iceGatheringState + '\n';
+    str += 'signalingState: ' + peer.signalingState + '\n';
+
+    return str;
+
+}
+
+function refreshState(){
+    document.getElementById('state').innerText = getStateString(this);
 }
