@@ -12,7 +12,7 @@ window.onload = async function() {
     const srdButton = document.getElementById('srdButton'); // NO I18N
     const remoteSDPTextArea = document.getElementById('remoteSDPTextArea'); // NO I18N
 
-    let deviceId = (await navigator.mediaDevices.enumerateDevices()).find(device => device.label.includes('FaceTime')).deviceId; // NO I18N
+    let deviceId = (await navigator.mediaDevices.enumerateDevices()).find(device => device.label.includes('FaceTime'))?.deviceId; // NO I18N
     let stream = await navigator.mediaDevices.getUserMedia({video: {deviceId}});
     document.getElementById('self').srcObject = stream; // NO I18N
 
