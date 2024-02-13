@@ -59,8 +59,8 @@ window.onload = async function() {
     }
 
     generateAnswerButton.onclick = async function() {
-        let offer = await pc.createAnswer();
-        pc.setLocalDescription(offer);
+        let answer = await pc.createAnswer();
+        pc.setLocalDescription(answer);
 
         pc.onicegatheringstatechange = function() {
             document.getElementById('state').innerText = getStateString(pc);
