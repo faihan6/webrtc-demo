@@ -23,13 +23,22 @@ window.onload = async function() {
         urls: 'stun:con-in2-23.zohomeeting.com:3478' // NO I18N
     }
 
+    // let turnServer = {
+    //     "urls": [ // NO I18N
+    //         "turn:turn-in3.zohomeeting.com:443?transport=tcp", // NO I18N
+    //         "turns:turn-in3.zohomeeting.com:443?transport=tcp" // NO I18N
+    //     ],
+    //     credential: "6ReQL5tZTh+j6ryK9HZVJY0ZBOo=", // NO I18N
+    //     username: "1707775754:1096727025_664000154548923_av" // NO I18N
+    // }
+
     let turnServer = {
-        "urls": [ // NO I18N
-            "turn:turn-in3.zohomeeting.com:443?transport=tcp", // NO I18N
-            "turns:turn-in3.zohomeeting.com:443?transport=tcp" // NO I18N
+        "urls": [
+            "turn:turn-us4-1.zohomeeting.com:443?transport=tcp",
+            "turns:turn-us4-1.zohomeeting.com:443?transport=tcp",
         ],
-        credential: "6ReQL5tZTh+j6ryK9HZVJY0ZBOo=", // NO I18N
-        username: "1707775754:1096727025_664000154548923_av" // NO I18N
+        "credential": "Lk2YHLHXkCHXl5XprZFwB+kX6lc=",
+        "username": "1707824794:1034204056_664000154637987_av"
     }
 
     
