@@ -38,7 +38,7 @@ window.onload = async function() {
 
     let pc = new RTCPeerConnection(config);
 
-    stream.getVideoTracks().forEach(track => pc.addTrack(track, stream));
+    stream.getTracks().forEach(track => pc.addTrack(track, stream));
 
     srdButton.onclick = async function() {
         let remoteSDP = JSON.parse(remoteSDPTextArea.value);

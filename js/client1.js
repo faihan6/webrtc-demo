@@ -37,7 +37,7 @@ window.onload = async function() {
 
     let pc = new RTCPeerConnection(config);
 
-    stream.getVideoTracks().forEach(track => pc.addTrack(track, stream));
+    stream.getTracks().forEach(track => pc.addTrack(track, stream));
 
     generateOfferButton.onclick = async function() {
         let offer = await pc.createOffer();
