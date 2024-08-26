@@ -14,10 +14,10 @@ window.onload = async function() {
     
 
     let deviceId = (await navigator.mediaDevices.enumerateDevices()).find(device => device.label.includes('FaceTime'))?.deviceId; // NO I18N
-    let stream = await navigator.mediaDevices.getUserMedia({video: {deviceId}});
-    document.getElementById('self').srcObject = stream; // NO I18N
-
-    let track = stream.getVideoTracks()[0]
+    let stream = await navigator.mediaDevices.getUserMedia({video: {deviceId}, audio: true});
+    document.getElementById('self').srcObject = stream;
+    document.getElementById('self').muted = true;
+    document.getElementById('self').style.transform = 'scaleX(-1)';
 
 
     let turnServer = {
@@ -37,7 +37,8 @@ window.onload = async function() {
     }
 
     let pc = new RTCPeerConnection(config);
-    pc.addTrack(track);
+
+    stream.getVideoTracks().forEach(track => pc.addTrack(track, stream));
 
     srdButton.onclick = async function() {
         let remoteSDP = JSON.parse(remoteSDPTextArea.value);
@@ -65,7 +66,23 @@ window.onload = async function() {
     pc.onconnectionstatechange = refreshState
 
     pc.ontrack = function(event) {
-        document.getElementById('remote').srcObject = new MediaStream([event.track]); // NO I18N
+        if(track.kind === 'video'){
+            if(!document.getElementById('remote').srcObject){
+                document.getElementById('remote').srcObject = new MediaStream([track]);
+            }
+            else{
+                document.getElementById('remote').srcObject.addTrack(track);
+            }
+            document.getElementById('remote').srcObject = new MediaStream([track]);
+        }
+        if(track.kind === 'audio'){
+            if(!document.getElementById('remote').srcObject){
+                document.getElementById('remote').srcObject = new MediaStream([track]);
+            }
+            else{
+                document.getElementById('remote').srcObject.addTrack(track);
+            }
+        }
     }
 
 }
