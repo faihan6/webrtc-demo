@@ -66,6 +66,9 @@ window.onload = async function() {
     pc.onconnectionstatechange = refreshState
 
     pc.ontrack = function(event) {
+
+        let track = event.track;
+
         if(track.kind === 'video'){
             if(!document.getElementById('remote').srcObject){
                 document.getElementById('remote').srcObject = new MediaStream([track]);
